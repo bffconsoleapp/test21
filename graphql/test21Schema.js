@@ -1,5 +1,3 @@
-```graphql
-codegen-start
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
@@ -61,61 +59,3 @@ const typeDefs = gql`
 `;
 
 export default typeDefs;
-codegen-end
-```
-
-```javascript
-codegen-start-resolver
-const sampleData = {
-  Credit_Unions: [
-    {
-      Contract_Number: "CU0001",
-      Credit_Union_Name: "First Credit Union",
-      Premium_Adjustment: [
-        {
-          Product_Name: "Product A",
-          Report_Period: "2023-Q1",
-          Status: "Completed",
-          Last_Update: "2023-03-31",
-          Period_Ending: "2023-03-31",
-          Adjustment_Type_to_the_Credit_Union: "Type A",
-          Comment: "Adjustment processed",
-          Total_Borrower_Fees_: 300.0,
-          CU_Retail_Rate: 1.5,
-          Protected_Loan_Amount: 10000.0,
-          Pay_Rate: 0.02,
-          Premium_Due: 150.0,
-          Total_Amount: 315.0,
-        },
-      ],
-    },
-  ],
-};
-
-const resolvers = {
-  Query: {
-    getCreditUnion: (_, { Contract_Number }) => {
-      return sampleData.Credit_Unions.find(
-        (cu) => cu.Contract_Number === Contract_Number
-      );
-    },
-  },
-  Mutation: {
-    addPremiumAdjustment: (_, { contractNumber, input }) => {
-      const creditUnion = sampleData.Credit_Unions.find(
-        (cu) => cu.Contract_Number === contractNumber
-      );
-
-      if (creditUnion) {
-        creditUnion.Premium_Adjustment.push(input);
-        return input;
-      }
-
-      throw new Error("Credit Union not found");
-    },
-  },
-};
-
-export default resolvers;
-codegen-end-resolver
-```
